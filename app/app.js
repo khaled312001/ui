@@ -1,10 +1,11 @@
 // Shared JavaScript functions for the app
 
-// Check if user is logged in
+// Check if user is logged in (disabled - no login required for mobile pages)
 function checkAuth() {
-    if (!localStorage.getItem('isLoggedIn')) {
-        window.location.href = 'login.html';
-    }
+    // Authentication check disabled - pages are now accessible without login
+    // if (!localStorage.getItem('isLoggedIn')) {
+    //     window.location.href = 'login.html';
+    // }
 }
 
 // Show toast notification
