@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Review Application - Ant Recruit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 414px;
+            margin: 0 auto;
+            background: #f9fafb;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b sticky top-0 z-10">
+        <div class="px-4 py-4 flex items-center">
+            <a href="apply.html" class="text-blue-600 mr-4">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+            <h1 class="text-lg font-semibold text-gray-900">Review Application</h1>
+        </div>
+    </header>
+
+    <!-- Progress Indicator -->
+    <div class="bg-white px-4 py-4 border-b">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-medium text-blue-600">Step 2 of 3</span>
+            <span class="text-sm text-gray-500">Review & Submit</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-600 h-2 rounded-full" style="width: 66%"></div>
+        </div>
+    </div>
+
+    <!-- Review Content -->
+    <div class="px-4 py-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">Review Your Application</h2>
+
+        <!-- Job Summary -->
+        <div class="bg-white rounded-xl p-4 mb-4">
+            <h3 class="font-semibold text-gray-900 mb-3">Job Application</h3>
+            <div class="flex items-start gap-3">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-building text-blue-600 text-xl"></i>
+                </div>
+                <div>
+                    <div class="font-semibold text-gray-900">Senior Product Designer</div>
+                    <div class="text-sm text-gray-600">TechCorp Inc.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CV -->
+        <div class="bg-white rounded-xl p-4 mb-4">
+            <h3 class="font-semibold text-gray-900 mb-3">Your CV</h3>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-file-pdf text-blue-600"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="font-medium text-gray-900">John_Doe_CV.pdf</div>
+                    <div class="text-sm text-gray-500">2.4 MB</div>
+                </div>
+                <a href="apply.html" class="text-blue-600 text-sm font-medium">Change</a>
+            </div>
+        </div>
+
+        <!-- Cover Note -->
+        <div class="bg-white rounded-xl p-4 mb-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Cover Note</h3>
+            <p class="text-gray-700 text-sm leading-relaxed" id="coverNotePreview">
+                I'm excited to apply for this position. With 5+ years of experience in product design, I believe I can contribute significantly to your team...
+            </p>
+            <a href="apply.html" class="text-blue-600 text-sm font-medium mt-2 inline-block">Edit</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="submitApplication()" class="block w-full py-4 bg-blue-600 text-white rounded-lg font-semibold text-center mb-4">
+            Submit Application
+        </button>
+        <a href="job-detail.html" class="block w-full py-3 bg-gray-100 text-gray-700 rounded-lg font-medium text-center">
+            Cancel
+        </a>
+    </div>
+
+    <script>
+        // Load cover note from localStorage
+        const coverNote = localStorage.getItem('coverNote');
+        if (coverNote) {
+            document.getElementById('coverNotePreview').textContent = coverNote || 'No cover note added.';
+        }
+
+        function submitApplication() {
+            // Create application
+            const application = {
+                id: 'AR-2024-' + Date.now(),
+                jobTitle: 'Senior Product Designer',
+                company: 'TechCorp Inc.',
+                date: new Date().toLocaleDateString(),
+                status: 'Pending'
+            };
+
+            // Save to applications
+            let applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            applications.push(application);
+            localStorage.setItem('applications', JSON.stringify(applications));
+
+            // Redirect to success page
+            window.location.href = 'apply-success.html';
+        }
+
+        // Check if user is logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
+

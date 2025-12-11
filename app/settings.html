@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Settings - Ant Recruit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 414px;
+            margin: 0 auto;
+            background: #f9fafb;
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b sticky top-0 z-10">
+        <div class="px-4 py-4 flex items-center">
+            <a href="profile.html" class="text-blue-600 mr-4">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+            <h1 class="text-xl font-bold text-gray-900">Settings</h1>
+        </div>
+    </header>
+
+    <!-- Account Settings -->
+    <div class="px-4 py-4">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Account</h2>
+        <div class="space-y-2 mb-6">
+            <a href="edit-profile.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Edit Profile</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+            <a href="change-password.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-lock text-green-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Change Password</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+            <a href="privacy.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-purple-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Privacy & Security</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+        </div>
+
+        <!-- Preferences -->
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Preferences</h2>
+        <div class="space-y-2 mb-6">
+            <div class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-globe text-orange-600"></i>
+                    </div>
+                    <div>
+                        <span class="font-medium text-gray-900">Language</span>
+                        <p class="text-sm text-gray-500">English</p>
+                    </div>
+                </div>
+                <button onclick="changeLanguage()" class="text-blue-600 font-medium">Change</button>
+            </div>
+            <div class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-moon text-indigo-600"></i>
+                    </div>
+                    <div>
+                        <span class="font-medium text-gray-900">Theme</span>
+                        <p class="text-sm text-gray-500" id="themeText">Light</p>
+                    </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" id="darkMode" onchange="toggleDarkMode(this.checked)">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            <a href="notifications.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bell text-green-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Notifications</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+        </div>
+
+        <!-- Data & Storage -->
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Data & Storage</h2>
+        <div class="space-y-2 mb-6">
+            <button onclick="clearCache()" class="w-full flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-trash-alt text-yellow-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Clear Cache</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </button>
+            <button onclick="downloadData()" class="w-full flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-download text-blue-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Download My Data</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </button>
+        </div>
+
+        <!-- Support -->
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Support</h2>
+        <div class="space-y-2 mb-6">
+            <a href="help.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-question-circle text-teal-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Help Center</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+            <a href="contact-support.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-headset text-pink-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">Contact Support</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+            <a href="about-app.html" class="flex items-center justify-between bg-white p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-info-circle text-gray-600"></i>
+                    </div>
+                    <span class="font-medium text-gray-900">About</span>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </a>
+        </div>
+
+        <!-- Danger Zone -->
+        <h2 class="text-lg font-semibold text-red-600 mb-3">Danger Zone</h2>
+        <div class="space-y-2">
+            <button onclick="deleteAccount()" class="w-full flex items-center justify-between bg-white p-4 rounded-lg border border-red-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-red-600"></i>
+                    </div>
+                    <span class="font-medium text-red-600">Delete Account</span>
+                </div>
+                <i class="fas fa-chevron-right text-red-400"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-[414px] bg-white border-t border-gray-200">
+        <div class="flex justify-around items-center py-2">
+            <a href="home.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">Home</span>
+            </a>
+            <a href="search.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-search text-xl mb-1"></i>
+                <span class="text-xs">Search</span>
+            </a>
+            <a href="saved.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="far fa-heart text-xl mb-1"></i>
+                <span class="text-xs">Saved</span>
+            </a>
+            <a href="applications.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-briefcase text-xl mb-1"></i>
+                <span class="text-xs">Applications</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Load dark mode setting
+        const darkMode = localStorage.getItem('darkMode') === 'true';
+        if (darkMode) {
+            document.getElementById('darkMode').checked = true;
+            document.getElementById('themeText').textContent = 'Dark';
+        }
+
+        function toggleDarkMode(enabled) {
+            localStorage.setItem('darkMode', enabled);
+            document.getElementById('themeText').textContent = enabled ? 'Dark' : 'Light';
+            showToast(enabled ? 'Dark mode enabled' : 'Light mode enabled');
+        }
+
+        function changeLanguage() {
+            const languages = ['English', 'Arabic', 'French', 'Spanish', 'German'];
+            const current = 'English';
+            const selected = prompt('Select language:\n1. English\n2. Arabic\n3. French\n4. Spanish\n5. German', '1');
+            
+            if (selected && languages[parseInt(selected) - 1]) {
+                const lang = languages[parseInt(selected) - 1];
+                localStorage.setItem('language', lang);
+                showToast('Language changed to ' + lang);
+            }
+        }
+
+        function clearCache() {
+            if (confirm('Clear all cached data? This will not delete your account or saved data.')) {
+                // Clear cache (in real app, this would clear actual cache)
+                showToast('Cache cleared successfully');
+            }
+        }
+
+        function downloadData() {
+            showToast('Preparing your data download...');
+            // In real app, this would generate and download a file
+            setTimeout(() => {
+                showToast('Data download started');
+            }, 1000);
+        }
+
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently deleted.')) {
+                if (confirm('This is your last warning. Are you absolutely sure?')) {
+                    // Clear all data
+                    localStorage.clear();
+                    showToast('Account deleted. Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                }
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg z-50';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // Check if user is logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
+

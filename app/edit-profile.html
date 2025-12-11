@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Edit Profile - Ant Recruit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 414px;
+            margin: 0 auto;
+            background: #f9fafb;
+            padding-bottom: 100px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b sticky top-0 z-10">
+        <div class="px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="settings.html" class="text-blue-600 mr-4">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </a>
+                <h1 class="text-xl font-bold text-gray-900">Edit Profile</h1>
+            </div>
+            <button class="text-blue-600 font-medium" onclick="saveProfile()">Save</button>
+        </div>
+    </header>
+
+    <!-- Profile Picture -->
+    <div class="bg-white px-4 py-6 border-b">
+        <div class="flex flex-col items-center">
+            <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center relative mb-4 cursor-pointer" onclick="changeProfilePicture()" id="profilePicture">
+                <i class="fas fa-user text-blue-600 text-4xl" id="profileIcon"></i>
+                <img id="profileImage" src="" alt="" class="w-full h-full rounded-full object-cover hidden">
+                <div class="absolute bottom-0 right-0 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white">
+                    <i class="fas fa-camera text-white text-sm"></i>
+                </div>
+            </div>
+            <button onclick="changeProfilePicture()" class="text-blue-600 font-medium">Change Photo</button>
+        </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="px-4 py-4 space-y-4">
+        <div class="bg-white rounded-xl p-4">
+            <h3 class="font-semibold text-gray-900 mb-4">Personal Information</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="fullName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Enter your full name">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Enter your email">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="+1 (555) 123-4567">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" id="location" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="City, Country">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
+                    <textarea id="bio" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Tell us about yourself..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-4">
+            <h3 class="font-semibold text-gray-900 mb-4">Professional Information</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Position</label>
+                    <input type="text" id="position" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="e.g. Product Designer">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Years of Experience</label>
+                    <select id="experience" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                        <option>Select experience</option>
+                        <option>0-1 years</option>
+                        <option>2-5 years</option>
+                        <option>5-10 years</option>
+                        <option>10+ years</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Skills</label>
+                    <input type="text" id="skills" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="e.g. Figma, React, UX Design">
+                    <p class="text-xs text-gray-500 mt-1">Separate skills with commas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load user data
+        function loadUserData() {
+            const userName = localStorage.getItem('userName') || '';
+            const userEmail = localStorage.getItem('userEmail') || '';
+            const userPhone = localStorage.getItem('userPhone') || '';
+            const userLocation = localStorage.getItem('userLocation') || '';
+            const userBio = localStorage.getItem('userBio') || '';
+            const userPosition = localStorage.getItem('userPosition') || '';
+            const userExperience = localStorage.getItem('userExperience') || '';
+            const userSkills = localStorage.getItem('userSkills') || '';
+            const profilePicture = localStorage.getItem('profilePicture');
+
+            if (userName) document.getElementById('fullName').value = userName;
+            if (userEmail) document.getElementById('email').value = userEmail;
+            if (userPhone) document.getElementById('phone').value = userPhone;
+            if (userLocation) document.getElementById('location').value = userLocation;
+            if (userBio) document.getElementById('bio').value = userBio;
+            if (userPosition) document.getElementById('position').value = userPosition;
+            if (userExperience) document.getElementById('experience').value = userExperience;
+            if (userSkills) document.getElementById('skills').value = userSkills;
+            
+            if (profilePicture) {
+                const img = document.getElementById('profileImage');
+                const icon = document.getElementById('profileIcon');
+                img.src = profilePicture;
+                img.classList.remove('hidden');
+                icon.classList.add('hidden');
+            }
+        }
+
+        function changeProfilePicture() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.getElementById('profileImage');
+                        const icon = document.getElementById('profileIcon');
+                        img.src = e.target.result;
+                        img.classList.remove('hidden');
+                        icon.classList.add('hidden');
+                        localStorage.setItem('profilePicture', e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+
+        function saveProfile() {
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const bio = document.getElementById('bio').value;
+            const position = document.getElementById('position').value;
+            const experience = document.getElementById('experience').value;
+            const skills = document.getElementById('skills').value;
+
+            // Validate
+            if (!fullName || !email) {
+                showToast('Please fill in required fields (Name and Email)');
+                return;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('userName', fullName);
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('userLocation', location);
+            localStorage.setItem('userBio', bio);
+            localStorage.setItem('userPosition', position);
+            localStorage.setItem('userExperience', experience);
+            localStorage.setItem('userSkills', skills);
+
+            showToast('Profile updated successfully');
+            
+            setTimeout(() => {
+                window.location.href = 'profile.html';
+            }, 1000);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg z-50';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // Load data on page load
+        loadUserData();
+
+        // Check if user is logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
+

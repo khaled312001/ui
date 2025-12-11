@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notifications - Ant Recruit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 414px;
+            margin: 0 auto;
+            background: #f9fafb;
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white border-b sticky top-0 z-10">
+        <div class="px-4 py-4 flex items-center">
+            <a href="profile.html" class="text-blue-600 mr-4">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+            <h1 class="text-xl font-bold text-gray-900">Notifications</h1>
+            <button class="ml-auto text-blue-600 text-sm font-medium" onclick="markAllAsRead()">
+                Mark all read
+            </button>
+        </div>
+    </header>
+
+    <!-- Notification Settings -->
+    <div class="bg-white px-4 py-4 border-b mb-2">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Notification Settings</h2>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-gray-900">Job Alerts</div>
+                    <div class="text-sm text-gray-500">Get notified about new job matches</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" id="jobAlerts" checked onchange="updateNotificationSetting('jobAlerts', this.checked)">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-gray-900">Application Updates</div>
+                    <div class="text-sm text-gray-500">Status changes on your applications</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" id="appUpdates" checked onchange="updateNotificationSetting('appUpdates', this.checked)">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-gray-900">New Matches</div>
+                    <div class="text-sm text-gray-500">Jobs that match your profile</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" id="newMatches" checked onchange="updateNotificationSetting('newMatches', this.checked)">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="font-medium text-gray-900">Weekly Digest</div>
+                    <div class="text-sm text-gray-500">Weekly summary of activities</div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer" id="weeklyDigest" onchange="updateNotificationSetting('weeklyDigest', this.checked)">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications List -->
+    <div class="px-4 py-4">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">Recent Notifications</h2>
+        
+        <div class="space-y-3" id="notificationsList">
+            <!-- Notification 1 - Unread -->
+            <div class="bg-white rounded-xl p-4 border-l-4 border-blue-600 notification-item" data-id="1" onclick="openNotification(1)">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-briefcase text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                            <h3 class="font-semibold text-gray-900">New Job Match</h3>
+                            <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1">Senior Product Designer at TechCorp matches your profile</p>
+                        <span class="text-xs text-gray-500">2 hours ago</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500" onclick="event.stopPropagation(); deleteNotification(1)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notification 2 - Unread -->
+            <div class="bg-white rounded-xl p-4 border-l-4 border-green-600 notification-item" data-id="2" onclick="openNotification(2)">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                            <h3 class="font-semibold text-gray-900">Application Status Update</h3>
+                            <span class="w-2 h-2 bg-green-600 rounded-full"></span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1">Your application for Full Stack Developer is under review</p>
+                        <span class="text-xs text-gray-500">5 hours ago</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500" onclick="event.stopPropagation(); deleteNotification(2)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notification 3 - Read -->
+            <div class="bg-white rounded-xl p-4 border-l-4 border-gray-300 notification-item read" data-id="3" onclick="openNotification(3)">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-calendar text-orange-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                            <h3 class="font-semibold text-gray-900">Interview Scheduled</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1">Interview for Marketing Manager scheduled for Jan 15, 2:00 PM</p>
+                        <span class="text-xs text-gray-500">1 day ago</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500" onclick="event.stopPropagation(); deleteNotification(3)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notification 4 - Read -->
+            <div class="bg-white rounded-xl p-4 border-l-4 border-gray-300 notification-item read" data-id="4" onclick="openNotification(4)">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-star text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                            <h3 class="font-semibold text-gray-900">New Job Alert</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1">3 new jobs match your saved search criteria</p>
+                        <span class="text-xs text-gray-500">2 days ago</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500" onclick="event.stopPropagation(); deleteNotification(4)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notification 5 - Read -->
+            <div class="bg-white rounded-xl p-4 border-l-4 border-gray-300 notification-item read" data-id="5" onclick="openNotification(5)">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-paper-plane text-blue-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-start justify-between mb-1">
+                            <h3 class="font-semibold text-gray-900">Application Submitted</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-1">Your application for Senior Product Designer has been submitted</p>
+                        <span class="text-xs text-gray-500">3 days ago</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500" onclick="event.stopPropagation(); deleteNotification(5)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div id="emptyState" class="hidden text-center py-12">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-bell-slash text-gray-400 text-3xl"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">No Notifications</h3>
+            <p class="text-gray-600">You're all caught up!</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-[414px] bg-white border-t border-gray-200">
+        <div class="flex justify-around items-center py-2">
+            <a href="home.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">Home</span>
+            </a>
+            <a href="search.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-search text-xl mb-1"></i>
+                <span class="text-xs">Search</span>
+            </a>
+            <a href="saved.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="far fa-heart text-xl mb-1"></i>
+                <span class="text-xs">Saved</span>
+            </a>
+            <a href="applications.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-briefcase text-xl mb-1"></i>
+                <span class="text-xs">Applications</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center py-2 px-4 text-gray-400">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">Profile</span>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        // Load notification settings from localStorage
+        function loadNotificationSettings() {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings') || '{}');
+            
+            document.getElementById('jobAlerts').checked = settings.jobAlerts !== false;
+            document.getElementById('appUpdates').checked = settings.appUpdates !== false;
+            document.getElementById('newMatches').checked = settings.newMatches !== false;
+            document.getElementById('weeklyDigest').checked = settings.weeklyDigest === true;
+        }
+
+        // Update notification setting
+        function updateNotificationSetting(key, value) {
+            const settings = JSON.parse(localStorage.getItem('notificationSettings') || '{}');
+            settings[key] = value;
+            localStorage.setItem('notificationSettings', JSON.stringify(settings));
+            showToast(value ? key + ' enabled' : key + ' disabled');
+        }
+
+        // Mark notification as read
+        function markAsRead(notificationId) {
+            const notification = document.querySelector(`[data-id="${notificationId}"]`);
+            if (notification && !notification.classList.contains('read')) {
+                notification.classList.add('read');
+                notification.classList.remove('border-blue-600', 'border-green-600');
+                notification.classList.add('border-gray-300');
+                
+                const dot = notification.querySelector('.rounded-full.bg-blue-600, .rounded-full.bg-green-600');
+                if (dot) {
+                    dot.remove();
+                }
+                
+                // Save read notifications
+                let readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+                if (!readNotifications.includes(notificationId)) {
+                    readNotifications.push(notificationId);
+                    localStorage.setItem('readNotifications', JSON.stringify(readNotifications));
+                }
+            }
+        }
+
+        // Mark all as read
+        function markAllAsRead() {
+            document.querySelectorAll('.notification-item').forEach(item => {
+                const id = item.getAttribute('data-id');
+                markAsRead(id);
+            });
+            showToast('All notifications marked as read');
+        }
+
+        // Delete notification
+        function deleteNotification(notificationId) {
+            if (confirm('Delete this notification?')) {
+                const notification = document.querySelector(`[data-id="${notificationId}"]`);
+                if (notification) {
+                    notification.style.transition = 'opacity 0.3s';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        notification.remove();
+                        checkEmptyState();
+                    }, 300);
+                    
+                    // Save deleted notifications
+                    let deletedNotifications = JSON.parse(localStorage.getItem('deletedNotifications') || '[]');
+                    if (!deletedNotifications.includes(notificationId)) {
+                        deletedNotifications.push(notificationId);
+                        localStorage.setItem('deletedNotifications', JSON.stringify(deletedNotifications));
+                    }
+                }
+            }
+        }
+
+        // Open notification
+        function openNotification(notificationId) {
+            markAsRead(notificationId);
+            
+            // Navigate based on notification type
+            const notification = document.querySelector(`[data-id="${notificationId}"]`);
+            const text = notification.textContent.toLowerCase();
+            
+            if (text.includes('job match') || text.includes('job alert')) {
+                window.location.href = 'job-detail.html';
+            } else if (text.includes('application') || text.includes('interview')) {
+                window.location.href = 'applications.html';
+            } else {
+                showToast('Notification opened');
+            }
+        }
+
+        // Check empty state
+        function checkEmptyState() {
+            const notifications = document.querySelectorAll('.notification-item');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (notifications.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Show toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-lg z-50';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        // Load read notifications on page load
+        function loadReadNotifications() {
+            const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
+            readNotifications.forEach(id => {
+                markAsRead(id);
+            });
+        }
+
+        // Initialize
+        loadNotificationSettings();
+        loadReadNotifications();
+        checkEmptyState();
+
+        // Check if user is logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
+
